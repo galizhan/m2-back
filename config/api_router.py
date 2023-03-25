@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter, SimpleRouter
 
 from m2.users.api.views import UserViewSet
 from m2.building.urls import urlpatterns as building_urls
+from m2.apartment.urls import urlpatterns as apartment_urls
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -21,6 +22,7 @@ app_name = "api"
 urlpatterns = [
     path("", include(router.urls)),
     path("building/", include(building_urls)),
+    path("apartment/", include(apartment_urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest')),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

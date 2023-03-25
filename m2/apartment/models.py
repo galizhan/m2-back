@@ -11,3 +11,16 @@ class Apartment(TimestampMixin):
     name = models.CharField(max_length=100)
     area = models.IntegerField()
     sold_area = models.IntegerField(default=0)
+
+    def cover_image(self):
+        images = self.images.filter(is_cover=True)
+        if images.exists():
+            return images[0]
+        return None
+
+    def __str__(self):
+        return self.name
+class ApartmentImage(models.Model):
+    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='apartment_images')
+    is_cover = models.BooleanField(default=False)

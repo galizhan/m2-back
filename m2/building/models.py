@@ -12,7 +12,7 @@ class Building(TimestampMixin):
     pass_date = models.DateField()
     income_percentage = models.IntegerField()
     city = models.ForeignKey('main.City', on_delete=models.SET_NULL, null=True)
-    level = models.ForeignKey('main.Level', on_delete=models.SET_NULL, null=True)
+    level = models.ForeignKey('main.Level', on_delete=models.SET_NULL, null=True, related_name='buildings')
     total_area = models.IntegerField()
     total_sold_area = models.IntegerField(default=0)
     description = RichTextUploadingField()
@@ -21,9 +21,10 @@ class Building(TimestampMixin):
     def cover_image(self):
         cover_image = self.images.filter(is_cover=True)
         if cover_image.exists():
-            return cover_image.first().url
+            return cover_image.first()
         return None
-
+    def __str__(self):
+        return self.name
 
 class BuildingImage(models.Model):
     building = models.ForeignKey(Building, related_name='images', on_delete=models.CASCADE)
@@ -39,10 +40,12 @@ class BuildingAdditional(models.Model):
     type = models.CharField(max_length=20, choices=BuildingAdditionalChoices.choices)
     title = models.CharField(max_length=255)
     external_url = models.URLField()
+    file = models.FileField(null=True, blank=True)
     description = RichTextUploadingField()
 
 
+
 class BuildingPrice(models.Model):
-    building = models.ForeignKey(Building, on_delete=models.CASCADE)
+    building = models.ForeignKey(Building, on_delete=models.CASCADE, related_name='price_changes')
     price = models.IntegerField()
     date = models.DateField()
