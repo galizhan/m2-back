@@ -22,7 +22,8 @@ class User(AbstractUser):
     email = models.EmailField(_("Email Address"), blank=True, max_length=255)
     date_of_birth = models.DateField(_("Date of Birth"), blank=True, null=True)
     gender = models.CharField(_("Gender"), blank=True, max_length=255, null=True)
-
+    level = models.ForeignKey('main.Level', blank=True, null=True, on_delete=models.SET_NULL)
+    investment_price = models.IntegerField(default=0, blank=True, null=True)
     def get_absolute_url(self):
         """Get url for user's detail view.
 

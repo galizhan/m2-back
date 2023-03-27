@@ -6,6 +6,7 @@ class City(models.Model):
 
 class Level(models.Model):
     name = models.CharField(max_length=300)
+    number = models.IntegerField(null=True)
     investment_price = models.IntegerField()
     icon_active = models.FileField()
     icon_inactive = models.FileField()
