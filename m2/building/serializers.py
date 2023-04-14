@@ -42,3 +42,7 @@ class BuildingAdditionalSerializer(ModelSerializer):
 class BuildingDetailSerializer(BuildingSerializer):
     images = BuildingImageSerializer(many=True)
     additionals = BuildingAdditionalSerializer(many=True)
+    is_in_favourites = serializers.SerializerMethodField()
+
+    def get_is_in_favourites(self, obj):
+        return obj.favourites.all().count() > 0

@@ -84,6 +84,7 @@ LOCAL_APPS = [
     "m2.building",
     "m2.news",
     "m2.main",
+    "m2.investment",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from .serializers import UserSerializer, UserRegisterSerializer
+from ...main.models import Level
 
 User = get_user_model()
 
@@ -21,6 +22,7 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericV
         serializer = UserRegisterSerializer(data=request.data)
         if serializer.is_valid():
             instance = serializer.save()
+            instance.level = Level.objects.get(number=3)
             instance.set_password(serializer.validated_data['password'])
             instance.save()
             return Response(status=status.HTTP_201_CREATED, data=serializer.data)
